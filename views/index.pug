@@ -1,0 +1,42 @@
+extends layout
+
+block content
+  h1= title
+  if user
+    p HELLO #{user.display_name} !
+  //- タスクごとにループ
+  div.row
+  each task in tasks 
+    div.card.offset-md-2.col-md-8.col-xs-12.my-3
+      div.card-header
+        div.d-flex.justify-content-between
+          //- 編集権限アリ
+          if (user && (user.is_admin || task.user.id == user.id))
+            - toggleLink = `/tasks/toggle_public/${task.id}`
+            - deleteLink = `/tasks/delete/${task.id}`
+            form(action=toggleLink, method="post").d-inline-block 
+              button(type="submit" aria-label="Switch public or secret").btn.btn-secondary
+                if task.is_secret
+                  i.fas.fa-lock
+                else 
+                  i.fas.fa-unlock
+            form(action=deleteLink, method="post").d-inline-block.text-end
+              button(type="submit" aria-label="Delete").btn-close.do-delete
+        div.text-end.text-muted.small By: #{task.user.display_name}
+      div.card-body
+        div.card-title.fs-3.fw-bold!= escapeHTML(task.title)
+        if (task.comment != '')
+          div.card-text!= escapeHTML(task.comment)
+        else 
+          div.card-text.text-muted NO COMMENT
+        div.text-end
+          if (user && (user.is_admin || task.user.id == user.id))
+            - editLink = `/tasks/view/${task.id}`
+            a(href=editLink aria-label="To edit").btn.btn-primary
+              i.far.fa-edit
+
+  div.fixed-bottom
+    if user
+      a(href="/tasks/add"
+        style="width:2em;height:2em;bottom:5%;right:20%;position:fixed;"
+        aria-label="To add").d-inline-block.btn.btn-primary.rounded-circle.p-0.fs-4 +

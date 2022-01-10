@@ -1,0 +1,20 @@
+extends ../layout
+
+block content
+  h1= title
+  div.row 
+    if (errorMessage)
+      p #{errorMessage}
+    form(action="/users/login", method="post").offset-md-3.col-md-6.col-xs-12
+      a(href="/users/login_google") 
+        img(id="GoogleSignInButtonNormal" alt="SignIn", src="/images/btn_google_signin_light_normal_web.png")
+      div 
+        label(for="mail_address").form-label mail address
+        input#userID(type="email", name="mail_address").form-control
+      div 
+        label(for="password").form-label password
+        input#password(type="password", name="password").form-control
+      div.mt-1.text-end
+        input(type="submit", value="sign in").w-25.btn.btn-primary
+      div.mt-1.text-end
+        a(href="/users/signup").w-25.btn.btn-primary sign up

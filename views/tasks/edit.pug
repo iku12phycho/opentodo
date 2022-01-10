@@ -1,0 +1,22 @@
+extends ../layout 
+
+block content 
+  h1= title
+  div.card.offset-md-2.col-md-8.col-xs-12.my-3
+    form(action=`/tasks/delete/${task.id}`, method="post").card-header.text-end
+      if (!readOnly)
+        button(type="submit" aria-label="Delete").btn-close.do-delete
+    form(action=`/tasks/edit/${task.id}`, method="post").card-body
+      div 
+        label(for="title").form-label タスク
+        input#title(type="text" name="title" maxlength="255" value=task.title readonly=readOnly).form-control
+      div 
+        label(for="comment").form-label メモ
+        textarea#comment(name="comment" cols="30" rows="3" maxlength="255" readonly=readOnly).form-control #{task.comment}
+      div 
+        input#isSecret(type="checkbox" name="is_secret" checked=task.is_secret disabled=readOnly).form-check-input
+        label(for="isSecret").form-check-label 非公開
+      if (!readOnly)
+        div.text-end
+          button(type="submit" aria-label="Do edit").btn.btn-primary.m-1
+            i.far.fa-edit

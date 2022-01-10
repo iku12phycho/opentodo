@@ -1,0 +1,17 @@
+extends ../layout
+
+block content
+  h1= title
+  div.card.offset-md-2.col-md-8.col-xs-12.my-3
+    form(action="/tasks/add", method="post").card-body
+      div 
+        label(for="title").form-label タスク
+        input#title(type="text" name="title" maxlength="255").form-control
+      div 
+        label(for="comment").form-label メモ
+        textarea#comment(name="comment" cols="30" rows="3" maxlength="255").form-control
+      div 
+        input#isSecret(type="checkbox" name="is_secret").form-check-input
+        label(for="isSecret").form-check-label 非公開
+      div.text-end
+        input(type="submit", value="add").btn.btn-primary

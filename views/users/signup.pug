@@ -1,0 +1,18 @@
+extends ../layout
+
+block content
+  h1= title
+  if (errorMessage)
+    p #{errorMessage}
+  form(action="/users/signup", method="post")
+    div 
+      label(for="mail_address") mail address
+      input#userID(type="email", name="mail_address")
+    div 
+      label(for="password") password
+      input#password(type="password", name="password")
+    div 
+      label(for="passwordConfirm") password
+      input#passwordConfirm(type="password", name="password_confirm")
+    div 
+      input(type="submit", value="signup")
