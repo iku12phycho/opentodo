@@ -12,9 +12,9 @@ const ormconfig = {
     url: `${process.env.DB_URL}`,
     synchronize: false,
     logging: true,
-    entities: ["entities/**/*.js"],
-    migrations: ["db/migrations/**/*.js"],
-    subscribers: ["db/subscriber/**/*.js"],
+    entities: ["entities/**/*.ts"],
+    migrations: ["db/migrations/**/*.ts"],
+    subscribers: ["db/subscriber/**/*.ts"],
     cli: {
         entitiesDir: "entities",
         migrationsDir: "db/migrations",
