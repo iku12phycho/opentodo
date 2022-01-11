@@ -10,8 +10,8 @@
   "scripts": {
     "dev": "nodemon -L",
     "test": "jest",
-    "start": "node .dist/bin/www",
-    "start dev": "tsc && set DEBUG=express-typescript:* & node .dist/bin/www"
+    "start": "node dist/bin/www",
+    "start dev": "tsc && set DEBUG=express-typescript:* & node dist/bin/www"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
