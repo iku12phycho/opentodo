@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, CreateDateColumn, UpdateDateColumn, OneToMany, ManyToOne, RelationId} from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn} from 'typeorm';
 import { User } from './User';
 
 @Entity()
@@ -24,9 +24,10 @@ export class Task extends BaseEntity{
   @UpdateDateColumn()
   updated_at!: Date;
 
-  @ManyToOne(() => User, user => user.tasks)
+  @ManyToOne(() => User, user => user)
+  @JoinColumn({ name: 'userId' })
   user!: User;
 
-  @RelationId((task: Task) => task.user)
+  @Column()
   userId!: string;
 }

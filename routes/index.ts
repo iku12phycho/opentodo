@@ -65,7 +65,7 @@ router.post('/tasks/add', ensure, async function(req: Request, res: Response, ne
   task.comment = req.body.comment || '';
   task.process_status = 0;
   task.is_secret = req.body.is_secret ? true: false;
-  task.user = user;
+  task.userId = user.id;
   const inserted = await taskRepository.save(task);
   res.redirect('/');
 });

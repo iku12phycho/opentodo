@@ -59,7 +59,7 @@ exports.router.post('/tasks/add', ensure_1.ensure, async function (req, res, nex
     task.comment = req.body.comment || '';
     task.process_status = 0;
     task.is_secret = req.body.is_secret ? true : false;
-    task.user = user;
+    task.userId = user.id;
     const inserted = await taskRepository.save(task);
     res.redirect('/');
 });

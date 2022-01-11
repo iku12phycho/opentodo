@@ -43,11 +43,12 @@ __decorate([
     __metadata("design:type", Date)
 ], Task.prototype, "updated_at", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => User_1.User, user => user.tasks),
+    (0, typeorm_1.ManyToOne)(() => User_1.User, user => user),
+    (0, typeorm_1.JoinColumn)({ name: 'userId' }),
     __metadata("design:type", User_1.User)
 ], Task.prototype, "user", void 0);
 __decorate([
-    (0, typeorm_1.RelationId)((task) => task.user),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Task.prototype, "userId", void 0);
 Task = __decorate([
