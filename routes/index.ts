@@ -60,6 +60,7 @@ router.get('/tasks/add', ensure, async function(req: Request, res: Response, nex
 //タスク追加
 router.post('/tasks/add', ensure, async function(req: Request, res: Response, next: NextFunction){
   const user: any = req.user;
+  console.log(user);
   const task = new Task();
   task.title = req.body.title;
   task.comment = req.body.comment || '';
