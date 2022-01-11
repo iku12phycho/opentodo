@@ -1,2 +1,2 @@
-release: ts-node ./node_modules/.bin/typeorm migration:run
+release: typeorm migration:run
 web: npm start
