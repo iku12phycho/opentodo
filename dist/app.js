@@ -30,16 +30,20 @@ passport_1.default.use(new passport_local_1.Strategy({
 }, function (mail_address, password, done) {
     try {
         userRepository.findOne({ mail_address: mail_address }).then(user => {
+            let error = false;
+            //mail address not found
             if (!user)
-                done(null, false, { message: 'mail address error' });
-            if (!bcrypt_1.default.compareSync(password, user.password)) {
-                done(null, false, { message: 'password error' });
-            }
+                error = true;
+            //password not found
+            if (!bcrypt_1.default.compareSync(password, user.password))
+                error = true;
+            if (error)
+                return done(null, false, { message: 'メールアドレスもしくはパスワードに誤りがあります。' });
             return done(null, user);
         });
     }
     catch (err) {
-        return done(err, false, { message: 'auth error' });
+        return done(err, false, { message: '認証エラーが発生しました。[E-001]' });
     }
 }));
 passport_1.default.use('local-signup', new passport_local_1.Strategy({
@@ -48,10 +52,10 @@ passport_1.default.use('local-signup', new passport_local_1.Strategy({
 }, function (mail_address, password, done) {
     try {
         if (!mail_address || !password)
-            done(null, false, { message: 'must fill in mail_address and password' });
+            return done(null, false, { message: 'メールアドレスとパスワードを必ず入力してください。' });
         userRepository.findOne({ mail_address: mail_address }).then(user => {
             if (user)
-                return done(null, false, { message: 'already registered' });
+                return done(null, false, { message: 'お使いのメールアドレスは既に登録されています。' });
             const newUser = new User_1.User();
             const hashedPassword = bcrypt_1.default.hashSync(password, 10);
             newUser.mail_address = mail_address;
@@ -65,13 +69,13 @@ passport_1.default.use('local-signup', new passport_local_1.Strategy({
                     return done(null, user);
                 }
                 else {
-                    return done(null, false, { message: 'signup error' });
+                    return done(null, false, { message: '登録エラーが発生しました。[E-002]' });
                 }
             });
         });
     }
     catch (err) {
-        return done(err, false, { message: 'auth error' });
+        return done(err, false, { message: '認証エラーが発生しました。[E-003]' });
     }
 }));
 passport_1.default.use(new passport_google_oauth_1.OAuth2Strategy({
@@ -102,7 +106,7 @@ passport_1.default.use(new passport_google_oauth_1.OAuth2Strategy({
         });
     }
     else {
-        return done(null, false, { message: 'auth error' });
+        return done(null, false, { message: '認証エラーが発生しました。[E-004]' });
     }
 }));
 passport_1.default.serializeUser(function (user, done) {

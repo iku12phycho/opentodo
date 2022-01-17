@@ -35,14 +35,16 @@ passport.use(new LocalStrategy({
   function(mail_address: string, password: string, done: Function){
     try{
       userRepository.findOne({mail_address: mail_address}).then(user => {
-        if (!user) done(null, false, {message: 'mail address error'});
-        if (!bcrypt.compareSync(password, user!.password)) {
-          done(null, false, {message: 'password error'});
-        }
+        let error: boolean = false;
+        //mail address not found
+        if (!user) error = true;
+        //password not found
+        if (!bcrypt.compareSync(password, user!.password)) error = true;
+        if (error) return done(null, false, {message: 'メールアドレスもしくはパスワードに誤りがあります。'});
         return done(null, user);
       });
     }catch(err){
-      return done(err, false, {message: 'auth error'});
+      return done(err, false, {message: '認証エラーが発生しました。[E-001]'});
     }
   }
 ));
@@ -52,9 +54,9 @@ passport.use('local-signup', new LocalStrategy({
   },
   function(mail_address: string, password: string, done: Function){
     try{
-      if (!mail_address || !password) done(null, false, {message: 'must fill in mail_address and password'});
+      if (!mail_address || !password) return done(null, false, {message: 'メールアドレスとパスワードを必ず入力してください。'});
       userRepository.findOne({mail_address: mail_address}).then(user => {
-        if (user) return done(null, false, {message: 'already registered'});
+        if (user) return done(null, false, {message: 'お使いのメールアドレスは既に登録されています。'});
         const newUser = new User();
         const hashedPassword = bcrypt.hashSync(password, 10);
         newUser.mail_address = mail_address;
@@ -67,12 +69,12 @@ passport.use('local-signup', new LocalStrategy({
           if (registered){
             return done(null, user);
           }else{
-            return done(null, false, {message: 'signup error'});
+            return done(null, false, {message: '登録エラーが発生しました。[E-002]'});
           }
         });
       });
     }catch(err){
-      return done(err, false, {message: 'auth error'});
+      return done(err, false, {message: '認証エラーが発生しました。[E-003]'});
     }
   }
 ));
@@ -102,7 +104,7 @@ passport.use(new GoogleStrategy({
         return done(null, user);
       });
     }else{
-      return done(null, false, {message: 'auth error'});
+      return done(null, false, {message: '認証エラーが発生しました。[E-004]'});
     }
   }
 ));

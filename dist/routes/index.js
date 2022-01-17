@@ -54,6 +54,7 @@ exports.router.get('/tasks/add', ensure_1.ensure, async function (req, res, next
 //タスク追加
 exports.router.post('/tasks/add', ensure_1.ensure, async function (req, res, next) {
     const user = req.user;
+    console.log(user);
     const task = new Task_1.Task();
     task.title = req.body.title;
     task.comment = req.body.comment || '';

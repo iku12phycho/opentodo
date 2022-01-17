@@ -11,15 +11,15 @@ html(lang="ja-jp")
   body
     nav.navbar.fixed-top.justify-content-end.navbar-dark.bg-dark 
       ul.nav
-        li.nav-item.px-2.mx-1
+        li.nav-item.px-1.mx-1.vw-25
           a(href="/").btn.btn-outline-light ALL TASKS 
         if user 
-          li.nav-item.px-2.mx-1
+          li.nav-item.px-1.mx-1.vw-25
             a(href="/tasks/my_task").btn.btn-outline-light MY TASKS 
-          li.nav-item.px-2.mx-1
+          li.nav-item.px-1.mx-1.vw-25
             a(href="/users/logout").btn.btn-outline-light SIGN OUT 
         else 
-          li.nav-item.px-2.mx-1
+          li.nav-item.px-1.mx-1.vw-25
             a(href="/users/login").btn.btn-outline-light SIGN IN 
     main.container
     block content
