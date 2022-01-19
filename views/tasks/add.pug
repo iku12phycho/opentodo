@@ -3,10 +3,11 @@ extends ../layout
 block content
   h1= title
   div.card.offset-md-2.col-md-8.col-xs-12.my-3
-    form(action="/tasks/add", method="post").card-body
+    form(action="/tasks/add", method="post" novalidate).card-body.needs-validation
       div 
         label(for="title").form-label タスク
-        input#title(type="text" name="title" maxlength="255").form-control
+        input#title(type="text" name="title" maxlength="255" required).form-control
+        div.invalid-feedback 255字以下で必ず入力してください。
       div 
         label(for="comment").form-label メモ
         textarea#comment(name="comment" cols="30" rows="3" maxlength="255").form-control

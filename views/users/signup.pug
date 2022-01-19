@@ -4,15 +4,18 @@ block content
   h1= title
   if (errorMessage)
     p #{errorMessage}
-  form(action="/users/signup", method="post")
+  form(action="/users/signup", method="post" novalidate).offset-md-3.col-md-6.col-xs-12.needs-validation
     div 
-      label(for="mail_address") mail address
-      input#userID(type="email", name="mail_address")
+      label(for="mail_address").form-label メールアドレス
+      input#userID(type="email", name="mail_address" required).form-control
+      div.invalid-feedback メールアドレスを入力してください。メールアドレスには「@」が必要です。
     div 
-      label(for="password") password
-      input#password(type="password", name="password")
+      label(for="password") パスワード
+      input#password(type="password", name="password" required).form-control.password
+      div.invalid-feedback パスワードを入力してください。
     div 
-      label(for="passwordConfirm") password
-      input#passwordConfirm(type="password", name="password_confirm")
-    div 
-      input(type="submit", value="signup")
+      label(for="passwordConfirm") パスワード再確認
+      input#passwordConfirm(type="password", name="password_confirm" required).form-control.password-confirm
+      div.invalid-feedback パスワードで入力したパスワードと同じものを入力してください。
+    div.offset-md-9.col-md-3.col-xs-3.mt-1.text-end
+      input(type="submit", value="signUp").btn.btn-primary

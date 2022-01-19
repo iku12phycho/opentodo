@@ -5,16 +5,18 @@ block content
   div.row 
     if (errorMessage)
       p #{errorMessage}
-    form(action="/users/login", method="post").offset-md-3.col-md-6.col-xs-12
+    form(action="/users/login", method="post" novalidate).offset-md-3.col-md-6.col-xs-12.needs-validation
       a(href="/users/login_google") 
         img(id="GoogleSignInButtonNormal" alt="SignIn", src="/images/btn_google_signin_light_normal_web.png")
       div 
-        label(for="mail_address").form-label mail address
-        input#userID(type="email", name="mail_address").form-control
+        label(for="mail_address").form-label メールアドレス
+        input#userID(type="email", name="mail_address" required).form-control
+        div.invalid-feedback メールアドレスを入力してください。メールアドレスには「@」が必要です。
       div 
-        label(for="password").form-label password
-        input#password(type="password", name="password").form-control
-      div.offset-md-9.col-md-3.col-xs-3.mt-1.text-end
-        input(type="submit", value="sign in").btn.btn-primary
-      div.offset-md-9.col-md-3.col-xs-3.mt-1.text-end
-        a(href="/users/signup").btn.btn-primary sign up
+        label(for="password").form-label パスワード
+        input#password(type="password", name="password" required).form-control
+        div.invalid-feedback パスワードを入力してください。
+      div.text-end.mt-1
+        input(type="submit", value="signIn" style="width: 75px").btn.btn-primary
+      div.text-end.mt-1
+        a(href="/users/signup" style="width: 75px").btn.btn-primary signUp

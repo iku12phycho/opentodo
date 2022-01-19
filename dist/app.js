@@ -30,14 +30,11 @@ passport_1.default.use(new passport_local_1.Strategy({
 }, function (mail_address, password, done) {
     try {
         userRepository.findOne({ mail_address: mail_address }).then(user => {
-            let error = false;
             //mail address not found
             if (!user)
-                error = true;
+                return done(null, false, { message: 'メールアドレスもしくはパスワードに誤りがあります。' });
             //password not found
             if (!bcrypt_1.default.compareSync(password, user.password))
-                error = true;
-            if (error)
                 return done(null, false, { message: 'メールアドレスもしくはパスワードに誤りがあります。' });
             return done(null, user);
         });

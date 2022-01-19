@@ -6,10 +6,11 @@ block content
     form(action=`/tasks/delete/${task.id}`, method="post").card-header.text-end
       if (!readOnly)
         button(type="submit" aria-label="Delete").btn-close.do-delete
-    form(action=`/tasks/edit/${task.id}`, method="post").card-body
+    form(action=`/tasks/edit/${task.id}`, method="post" novalidate).card-body.needs-validation
       div 
         label(for="title").form-label タスク
-        input#title(type="text" name="title" maxlength="255" value=task.title readonly=readOnly).form-control
+        input#title(type="text" name="title" maxlength="255" value=task.title readonly=readOnly required).form-control
+        div.invalid-feedback 255字以下で必ず入力してください。
       div 
         label(for="comment").form-label メモ
         textarea#comment(name="comment" cols="30" rows="3" maxlength="255" readonly=readOnly).form-control #{task.comment}
