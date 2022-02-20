@@ -19,6 +19,7 @@
 - TypeScript
 - MySQL
 - Node.js
+- express
 - TypeORM
 - Bootstrap
 - heroku
